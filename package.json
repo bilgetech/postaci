@@ -1,0 +1,45 @@
+{
+  "name": "postaci",
+  "version": "0.0.0",
+  "description": "Continuous test runner for Postman",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bilgetech/postaci.git"
+  },
+  "keywords": [
+    "postman",
+    "ci",
+    "continuous",
+    "integration",
+    "continuous",
+    "testing",
+    "test",
+    "runner",
+    "testing",
+    "javascript"
+  ],
+  "author": "Ahmet Safa Orhan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bilgetech/postaci/issues"
+  },
+  "homepage": "https://github.com/bilgetech/postaci#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "dotenv": "^4.0.0",
+    "express": "^4.16.2",
+    "morgan": "^1.9.0",
+    "newman": "^3.9.1",
+    "node-schedule": "^1.3.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.15.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "prettier-eslint": "^8.7.3"
+  }
+}
