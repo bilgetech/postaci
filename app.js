@@ -14,3 +14,7 @@ app.use(bodyParser.json());
 
 // Configure Routes
 app.use('/', require('./routes/index'));
+
+const port = process.env.PORT || 3000;
+app.listen(port);
+console.log(`Listening on port: ${port}`);

@@ -1,6 +1,7 @@
 {
   "extends": "airbnb-base",
   "rules": {
-    "func-names": "error"
+    "func-names": "error",
+    "no-console": "off"
   }
 }
