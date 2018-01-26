@@ -1,0 +1,17 @@
+{
+  "boxes": [
+    {
+      "boxAddress": "unique-name-for-your-box",
+      "gitConfig": {
+        "remoteUrl": "https://github.com/you/yourbox.git",
+        "localDir": "path/to/your/box/dir",
+        "branch": "master",
+        "credentials": {
+          "username": "gitusername",
+          "passphrase": "s3cr3t_P4SS"
+        }
+      }
+    }
+  ],
+  "cronCommand": "* * 1 * *"
+}
