@@ -1,7 +1,7 @@
 {
   "boxes": [
     {
-      "boxAddress": "unique-name-for-your-box",
+      "address": "unique-name-for-your-box",
       "gitConfig": {
         "remoteUrl": "https://github.com/you/yourbox.git",
         "localDir": "path/to/your/box/dir",
@@ -10,6 +10,10 @@
           "username": "gitusername",
           "passphrase": "s3cr3t_P4SS"
         }
+      },
+      "injectAssets": {
+        "key": "ASSETS",
+        "value": "/assets"
       }
     }
   ],
