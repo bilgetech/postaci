@@ -16,7 +16,12 @@ dotenv.config();
 const contents = fs.readFileSync(program.config);
 const config = JSON.parse(contents);
 
-Boxes.init(config.boxes);
-
-// Start Server
-server.start();
+Boxes.init(config.boxes, (err) => {
+  if (err) {
+    console.error(err);
+    process.exit();
+  } else {
+    // Start Server
+    server.start();
+  }
+});
