@@ -19,8 +19,8 @@ Boxes.init(config.boxes, (err) => {
   if (err) {
     console.error(err);
     process.exit();
-  } else {
-    // Start Server
-    server.start();
   }
 });
+
+// Start Server
+server.start();

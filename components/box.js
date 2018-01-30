@@ -4,6 +4,44 @@ const newman = require('newman');
 const badge = require('gh-badges');
 const Repo = require('./repo');
 
+function generateBadge(runnable) {
+  const format = { template: 'flat' };
+  if (runnable.err) {
+    format.text = ['error', 'fatal error'];
+    format.colorscheme = 'red';
+  } else if (runnable.summary.error) {
+    format.text = ['error', 'has errors'];
+    format.colorscheme = 'red';
+  } else {
+    const total = runnable.summary.run.stats.assertions.total;
+    const failed = runnable.summary.run.stats.assertions.failed;
+    const success = total - failed;
+
+    if (failed === 0) {
+      format.text = ['all passing', `${success}/${total}`];
+      format.colorscheme = 'green';
+    } else {
+      format.text = ['some failed', `${success}/${total}`];
+      format.colorscheme = 'orange';
+    }
+  }
+
+  console.log(runnable.name, '\t\t\t', 'Generating badge');
+  badge(format, (svg, err) => {
+    if (err) {
+      console.error(err);
+    }
+    runnable.badge = svg;
+    console.log(runnable.name, '\t\t\t', 'Generated badge');
+  });
+}
+
+function generateAllBadges() {
+  this.postacirc.runnables.forEach((runnable) => {
+    generateBadge(runnable);
+  });
+}
+
 function readPostacirc(localDir) {
   const contents = fs.readFileSync(path.join(localDir, '.postacirc'));
   return JSON.parse(contents);
@@ -48,7 +86,7 @@ function runSingle(runnable, done) {
       globals: runnable.globals,
       iterationCount: runnable.iterationCount,
     })
-    .on('start', (err, args) => {
+    .on('start', () => {
       // on start of run, log to console
       console.log(runnable.name, '\t\t\t', 'Collection run started!');
     })
@@ -66,28 +104,32 @@ function runSingle(runnable, done) {
     });
 }
 
-function run(cb) {
-  if (!this.repo.alreadyCloned) {
-    cb('Repo is not cloned yet');
-    return;
-  }
+function run() {
+  if (this.isRunning) {
+    this.runQueued = true;
+  } else {
+    this.isRunning = true;
 
-  this.isRunning = true;
-
-  let completed = 0;
-
-  this.postacirc.runnables.forEach((runnable) => {
-    runSingle(runnable, () => {
-      completed += 1;
-      if (completed === this.postacirc.runnables.length) {
-        this.isRunning = false;
-        cb(null);
-      }
+    let completed = 0;
+    this.postacirc.runnables.forEach((runnable) => {
+      runSingle(runnable, () => {
+        completed += 1;
+        if (completed === this.postacirc.runnables.length) {
+          if (this.runQueued) {
+            this.runQueued = false;
+            this.run();
+          } else {
+            this.isRunning = false;
+            console.log(this.address, '\t\t\t', 'Box run completed');
+            this.generateAllBadges();
+          }
+        }
+      });
     });
-  });
+  }
 }
 
-function afterRefresh(cb) {
+function afterRefresh() {
   if (this.injectAssets) {
     console.log('Injecting assets global key');
     const localDir = this.repo.options.localDir;
@@ -111,20 +153,28 @@ function afterRefresh(cb) {
 
       updateGlobalEntry(runnable.globals, key, value);
     });
+  }
 
-    cb(null);
+  console.log(this.address, '\t\t\t', 'Box refresh completed.');
+
+  if (this.refreshQueued) {
+    this.refreshQueued = false;
+    console.log(
+      this.address,
+      '\t\t\t',
+      'There is an awaiting refresh command. Restarting refresh process.',
+    );
+    this.refreshAndRun();
   } else {
-    cb(null);
+    console.log(this.address, '\t\t\t', 'Running the runnables in the box.');
+    this.run();
   }
 }
 
-function refresh(cb) {
+function refreshAndRun(cb) {
   if (this.repo.busy) {
-    cb('Repo is currently busy');
-    return;
-  }
-
-  if (this.repo.alreadyCloned) {
+    this.refreshQueued = true;
+  } else if (this.repo.alreadyCloned) {
     this.repo.pull((err) => {
       if (err) {
         cb(err);
@@ -143,51 +193,6 @@ function refresh(cb) {
   }
 }
 
-function generateBadge(runnable, done) {
-  const format = { template: 'flat' };
-  if (runnable.err) {
-    format.text = ['error', 'fatal error'];
-    format.colorscheme = 'red';
-  } else if (runnable.summary.error) {
-    format.text = ['error', 'has errors'];
-    format.colorscheme = 'red';
-  } else {
-    const total = runnable.summary.run.stats.assertions.total;
-    const failed = runnable.summary.run.stats.assertions.failed;
-    const success = total - failed;
-
-    if (failed === 0) {
-      format.text = ['all passing', `${success}/${total}`];
-      format.colorscheme = 'green';
-    } else {
-      format.text = ['some failed', `${success}/${total}`];
-      format.colorscheme = 'orange';
-    }
-  }
-
-  console.log('Generating badge for', runnable.name);
-  badge(format, (svg, err) => {
-    if (err) {
-      console.error(err);
-    }
-    runnable.badge = svg;
-    console.log('Generated badge for', runnable.name);
-    done();
-  });
-}
-
-function generateAllBadges(done) {
-  let i = 0;
-  this.postacirc.runnables.forEach((runnable) => {
-    generateBadge(runnable, () => {
-      i += 1;
-      if (i === this.postacirc.runnables.length) {
-        done();
-      }
-    });
-  });
-}
-
 function getRunnableByName(name) {
   return this.postacirc.runnables.find(item => item.name === name);
 }
@@ -198,7 +203,7 @@ function Box(opts) {
   this.injectAssets = opts.injectAssets;
 }
 
-Box.prototype.refresh = refresh;
+Box.prototype.refreshAndRun = refreshAndRun;
 Box.prototype.run = run;
 Box.prototype.generateAllBadges = generateAllBadges;
 Box.prototype.getRunnableByName = getRunnableByName;
