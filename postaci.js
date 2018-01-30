@@ -1,14 +1,13 @@
 const fs = require('fs');
 const dotenv = require('dotenv');
 const program = require('commander');
+const server = require('./server');
+const Boxes = require('./components/boxes');
 
 program
   .version('0.1.0')
   .option('-c, --config <file>', 'Configuration file.')
   .parse(process.argv);
-
-const server = require('./server');
-const Boxes = require('./components/boxes');
 
 // Load the variables in .env file to the process.env
 dotenv.config();

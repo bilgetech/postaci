@@ -4,5 +4,5 @@
   "javascript.format.enable": false,
   "editor.tabSize": 2,
 
-  "editor.rulers": [80]
+  "editor.rulers": [100]
 }

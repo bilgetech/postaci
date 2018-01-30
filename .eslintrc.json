@@ -6,10 +6,16 @@
     "prefer-destructuring": "off",
     "no-param-reassign": "off",
     "max-len": [
-      "error",
+      "warn",
       {
-        "code": 80
+        "code": 100
       }
+    ],
+    "no-restricted-syntax": [
+      "error",
+      "ForInStatement",
+      "LabeledStatement",
+      "WithStatement"
     ]
   }
 }

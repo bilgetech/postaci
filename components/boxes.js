@@ -7,22 +7,22 @@ function init(boxesArr, cb) {
     const box = new Box(opts);
     items.push(box);
 
-    console.log(`Starting to refresh box:${box.address}`);
+    console.log(box.address, '\t\t\t', 'Starting to refresh box');
 
     box.refresh((err) => {
       if (err) {
-        console.log(`Box refresh error: ${err}`);
+        console.log(box.address, '\t\t\t', 'Box refresh error:', err);
         cb(err);
       } else {
-        console.log(`Box refresh completed: ${box.address}`);
-        console.log(`Starting to run box:${box.address}`);
+        console.log(box.address, '\t\t\t', 'Box refresh completed');
+        console.log(box.address, '\t\t\t', 'Starting to run box');
         box.run((err2) => {
           if (err2) {
-            console.log(`Box run error: ${err2}`);
+            console.log(box.address, '\t\t\t', 'Box run error:', err2);
             cb(err2);
           } else {
-            console.log('Box run completed: ', box.address);
-            cb(null);
+            console.log(box.address, '\t\t\t', 'Box run completed:', box.address);
+            box.generateAllBadges(cb);
           }
         });
       }
@@ -37,4 +37,5 @@ function findBoxByAddress(address) {
 const Boxes = {};
 Boxes.init = init;
 Boxes.findBoxByAddress = findBoxByAddress;
+
 module.exports = Boxes;
