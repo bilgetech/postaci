@@ -39,7 +39,6 @@ function pull(cb) {
   console.log('Trying to pull the repo');
   this.busy = true;
   let repository;
-  const remoteBranch = `origin/${this.options.branch}`;
   Git.Repository.open(this.options.localDir)
     .then((_repository) => {
       console.log('Opened the repo');
@@ -48,10 +47,16 @@ function pull(cb) {
     })
     .then(() => {
       console.log('Fetched origin');
-      repository.mergeBranches(this.options.branch, remoteBranch);
+      return repository.getBranch(`refs/remotes/origin/${this.options.branch}`);
+    })
+    .then((reference) => {
+      console.log('Got branch', this.options.branch);
+      return repository.checkoutRef(reference, {
+        checkoutStrategy: Git.Checkout.STRATEGY.FORCE,
+      });
     })
     .then((oid) => {
-      console.log('Merged the repo');
+      console.log('Force checkout to origin/', this.options.branch);
       this.busy = false;
       cb(null, oid);
     })
