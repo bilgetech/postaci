@@ -19,7 +19,7 @@ router.get('/summary/:box/:runnable', (req, res) => {
   res.json(summary);
 });
 
-router.get('/run/:box', (req, res) => {
+router.all('/run/:box', (req, res) => {
   const box = Boxes.findBoxByAddress(req.params.box);
   if (!box.repo.alreadyCloned) {
     res.json({
@@ -38,7 +38,7 @@ router.get('/run/:box', (req, res) => {
   box.run();
 });
 
-router.get('/refresh/:box', (req, res) => {
+router.all('/refresh/:box', (req, res) => {
   const box = Boxes.findBoxByAddress(req.params.box);
   if (box.repo.busy) {
     res.json({
