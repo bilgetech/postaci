@@ -115,12 +115,17 @@ function run() {
       runSingle(runnable, () => {
         completed += 1;
         if (completed === this.postacirc.runnables.length) {
-          if (this.runQueued) {
+          console.log(this.address, '\t\t\t', 'Box run completed');
+          this.isRunning = false;
+          if (this.refreshQueued) {
+            console.log(this.address, '\t\t\t', 'There is a refresh queued');
+            this.refreshQueued = false;
+            this.refreshAndRun();
+          } else if (this.runQueued) {
+            console.log(this.address, '\t\t\t', 'There is a run queued');
             this.runQueued = false;
             this.run();
           } else {
-            this.isRunning = false;
-            console.log(this.address, '\t\t\t', 'Box run completed');
             this.generateAllBadges();
           }
         }
@@ -172,7 +177,7 @@ function afterRefresh() {
 }
 
 function refreshAndRun(cb) {
-  if (this.repo.busy) {
+  if (this.repo.busy || this.isRunning) {
     this.refreshQueued = true;
   } else if (this.repo.alreadyCloned) {
     this.repo.pull((err) => {

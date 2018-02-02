@@ -40,9 +40,9 @@ router.all('/run/:box', (req, res) => {
 
 router.all('/refresh/:box', (req, res) => {
   const box = Boxes.findBoxByAddress(req.params.box);
-  if (box.repo.busy) {
+  if (box.repo.busy || box.isRunning) {
     res.json({
-      message: 'Another refresh is already going on. Queueing new refresh command.',
+      message: 'Another refresh or run is already going on. Queueing new refresh command.',
     });
   } else {
     res.json({
