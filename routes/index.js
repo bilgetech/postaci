@@ -4,6 +4,12 @@ const Boxes = require('../components/boxes');
 
 const router = express.Router();
 
+const sendOptions = {
+  headers: {
+    'Cache-Control': 'no-cache',
+  },
+};
+
 function badgeFile(fileName) {
   return path.resolve(__dirname, '../assets', fileName);
 }
@@ -15,18 +21,21 @@ router.get('/badge/:box/:runnable', (req, res) => {
   if (box) {
     runnable = box.getRunnableByName(runnable);
     if (box.isRunning) {
-      res.sendFile(badgeFile('tests-running.svg'));
+      res.sendFile(badgeFile('tests-running.svg'), sendOptions);
     } else if (runnable) {
       if (runnable.badge) {
-        res.contentType('svg').end(runnable.badge, 'binary');
+        res
+          .header('Cache-Control', 'no-cache')
+          .contentType('svg')
+          .end(runnable.badge, 'binary');
       } else {
-        res.sendFile(badgeFile('runnable-not-ready.svg'));
+        res.sendFile(badgeFile('runnable-not-ready.svg'), sendOptions);
       }
     } else {
-      res.sendFile(badgeFile('runnable-not-found.svg'));
+      res.sendFile(badgeFile('runnable-not-found.svg'), sendOptions);
     }
   } else {
-    res.sendFile(badgeFile('box-not-found.svg'));
+    res.sendFile(badgeFile('box-not-found.svg'), sendOptions);
   }
 });
 
