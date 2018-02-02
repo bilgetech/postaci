@@ -199,6 +199,7 @@ function refreshAndRun(cb) {
 }
 
 function getRunnableByName(name) {
+  if (!this.postacirc || !this.postacirc.runnables) return null;
   return this.postacirc.runnables.find(item => item.name === name);
 }
 
