@@ -14,8 +14,8 @@
       "injectAssets": {
         "key": "ASSETS",
         "value": "/assets"
-      }
+      },
+      "scheduleConfig": "*/3 * * * *"
     }
-  ],
-  "cronCommand": "* * 1 * *"
+  ]
 }
