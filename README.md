@@ -1,7 +1,11 @@
 # PostaCI
-PostaCI is a simple tool that allows you to version your [postman](https://www.getpostman.com/) tests, execute them regularly and see results as badges like this:
+PostaCI is a simple tool that allows you to version your [postman](https://www.getpostman.com/) tests, execute them regularly and see results as badges like these:
 
 ![](https://img.shields.io/badge/sample-badge-green.svg)
+
+![](https://img.shields.io/badge/all%20passing-34/34-green.svg)
+
+![](https://img.shields.io/badge/some%20failing-41/42-orange.svg)
 
 ## Features
 
