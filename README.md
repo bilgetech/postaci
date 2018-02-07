@@ -5,7 +5,7 @@ PostaCI is a simple tool that allows you to version your [postman](https://www.g
 
 ![](https://img.shields.io/badge/all%20passing-34/34-green.svg)
 
-![](https://img.shields.io/badge/some%20failing-41/42-orange.svg)
+![](https://img.shields.io/badge/some%20failing-40/42-orange.svg)
 
 ## Features
 
@@ -29,4 +29,4 @@ We, in [Bilgetech](http://www.bilgetech.com.tr) use this feature to refresh the 
 
 ## What does postacı mean?
 
-The word postacı [postadʒɯ] is the Turkish word for a postman. If you have hard time reading phonetic alphabet, you can call it post-uh-gee or post-uh-c-i
+The word postacı [postadʒɯ] is the Turkish word for a postman. If you have hard time reading phonetic alphabet, you can call it post-uh-gee or post-uh-c-i.
