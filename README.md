@@ -1,8 +1,7 @@
+# PostaCI
 
 ![postaci](https://user-images.githubusercontent.com/4990386/35919242-8c5aca92-0c25-11e8-94f4-7703ce418438.png)
 
-
-# PostaCI
 PostaCI is a simple tool that allows you to version your [postman](https://www.getpostman.com/) tests, execute them regularly and see results as badges like these:
 
 ![](https://img.shields.io/badge/sample-badge-green.svg)
