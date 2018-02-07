@@ -1,12 +1,8 @@
 # PostaCI
 
-![postaci](https://user-images.githubusercontent.com/4990386/35919242-8c5aca92-0c25-11e8-94f4-7703ce418438.png)
-
-PostaCI is a simple tool that allows you to version your [postman](https://www.getpostman.com/) tests, execute them regularly and see results as badges like these:
-
-![](https://img.shields.io/badge/sample-badge-green.svg)
-![](https://img.shields.io/badge/all%20passing-34/34-green.svg)
-![](https://img.shields.io/badge/some%20failing-40/42-orange.svg)
+| | | 
+|-|-|
+| ![postaci](https://user-images.githubusercontent.com/4990386/35919789-25e6c98a-0c27-11e8-979c-25519d07589c.png) | PostaCI is a simple tool that allows you to version your postman tests, execute them regularly and see results as badges like these: <br /><br />![](https://img.shields.io/badge/sample-badge-green.svg) ![](https://img.shields.io/badge/all%20passing-34/34-green.svg) ![](https://img.shields.io/badge/some%20failing-40/42-orange.svg) 
 
 ## Features
 
