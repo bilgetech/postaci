@@ -52,8 +52,8 @@ After the pull operation completed, runs all of the runnables inside of the box.
 ##### `GET/POST /run/:box-address`
 Runs all of the runnables inside of the box. Or queues a run command if the box is currently refreshing or running.
 
-##### `GET/POST /badge/:box-address/:runnable-name`
-Get the svg badge for the given runnable. All of the options are listed here:
+##### `GET /badge/:box-address/:runnable-name`
+Returns the svg badge for the given runnable. All of the options are listed here:
 
 - ![](https://img.shields.io/badge/tests-running...-yellow.svg)
 - ![](https://img.shields.io/badge/all%20passing-50/50-green.svg)
@@ -64,7 +64,7 @@ Get the svg badge for the given runnable. All of the options are listed here:
 - ![](https://img.shields.io/badge/runnable-not%20found-lightgrey.svg)
 - ![](https://img.shields.io/badge/runnable-not%20ready-lightgrey.svg)
 
-##### `GET/POST /summary/:box-address/:runnable-name`
+##### `GET /summary/:box-address/:runnable-name`
 
 Returns the json summary of the run. This json is directly pipelined from newman's json reporter.
 
