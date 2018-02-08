@@ -24,6 +24,50 @@ PostaCI provides a simple web server and lets you trigger runs, get results of r
 We, in [Bilgetech](http://www.bilgetech.com.tr) use this feature to refresh the test collections after tests are updated and re-run the tests after a new version of the tested project is published.
 
 
+## Concepts
+
+![box-folder-structure](https://user-images.githubusercontent.com/4990386/35969001-81e4a126-0cd6-11e8-8a06-2f4a024ca48a.png)
+
+### Box
+A box is a representation of your test collections which are living in the same repository. Each box can have multiple runnables and must have a .postacirc file in which you define all of your runnables.
+
+### Runnable
+A runnable is the sum of one collection file and the necessary files such as environment variables, global variables, data variables etc. Runnables can share files but may have side effects, so be careful about that.
+
+### .postacirc
+
+This file must be created and placed into each of your boxes. It should not be .gitignored.
+
+The .postacirc file is a json object and the structure of it is as follows:
+
+| Field | Type | Description |
+| ----- | ---- | ----------- |
+| runnables | array | Configuration of each runnable |
+| runnables.name | string | A name to identify runnable. It should be **unique** among the runnables of a box |
+
+## Installation
+
+```
+npm install -g postaci
+```
+
+## Usage```
+
+This library is intended to be used as a cli. Currently we don't support programmatic usage as a module.
+
+```
+postaci -c path/to/your/config.json
+```
+
+To get started with Postacı, you need to do the following:
+
+1. Prepare one config file defining your box entries
+2. Prepare a .postacirc file for each box you have
+
+### config.json
+
+config.json is the file you put all of the necessary information 
+
 ## What does postacı mean?
 
 The word postacı `/postadʒɯ/` is the Turkish word for a postman. If you have hard time reading phonetic alphabet, you can call it post-uh-gee or post-uh-c-i.
