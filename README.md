@@ -7,7 +7,7 @@
 ## Installation
 
 ```
-npm install -g postaci
+$ npm install -g postaci
 ```
 
 ## Features
@@ -63,7 +63,7 @@ The .postacirc file is a json object and the structure of it is as follows:
 This library is intended to be used as a cli. Currently we don't support programmatic usage as a module.
 
 ```
-postaci -c path/to/your/config.json
+$ postaci -c path/to/your/config.json
 ```
 
 To get started with PostaCI, you need to do the following:
