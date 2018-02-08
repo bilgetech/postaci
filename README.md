@@ -56,7 +56,9 @@ A runnable is the sum of one collection file and the necessary files such as env
 
 This file must be created and placed into the root of the each box. It should not be .gitignored.
 
-The .postacirc file is a json object and the structure of it is as follows:
+You can use the [sample.postacirc](/sample.postacirc) renaming it to .postacirc modifing it to suit your needs.
+
+The .postacirc file is a json object with the following structure.
 
 | Field | Type | Description | Required |
 | ----- | ---- | ----------- | -------- |
@@ -72,7 +74,7 @@ The .postacirc file is a json object and the structure of it is as follows:
 
 config.json is the file you put all of the necessary information. You should not add this file to repository since it has credential information and environment specific settings.
 
-You can use the [config-sample.json](/config-sample.json) and modify it to suit your needs.
+You can use the [config-sample.json](/config-sample.json) modifying it to suit your needs.
 
 | Field | Type | Description | Required |
 | ----- | ---- | ----------- | -------- |
