@@ -37,14 +37,19 @@ A runnable is the sum of one collection file and the necessary files such as env
 
 ### .postacirc
 
-This file must be created and placed into each of your boxes. It should not be .gitignored.
+This file must be created and placed into the root of the each box. It should not be .gitignored.
 
 The .postacirc file is a json object and the structure of it is as follows:
 
-| Field | Type | Description |
-| ----- | ---- | ----------- |
-| runnables | array | Configuration of each runnable |
-| runnables.name | string | A name to identify runnable. It should be **unique** among the runnables of a box |
+| Field | Type | Description | Required |
+| ----- | ---- | ----------- | -------- |
+| runnables | array | Configuration of each runnable | Required
+| runnables[].name | string | A name to identify runnable. It should be **unique** among the runnables of a box. | Required |
+| runnables[].collection | string | Path to the collection file relative to the box root. | Required |
+| runnables[].environment | string | Path to the environment variables file relative to the box root. | Optional |
+| runnables[].globals | string | Path to the global variables file relative to the box root. | Optional |
+| runnables[].iterationData | string | Path to the data variables file relative to the box root. | Optional |
+| runnables[].iterationCount | number | Number of iterations. | Optional
 
 ## Installation
 
@@ -52,7 +57,7 @@ The .postacirc file is a json object and the structure of it is as follows:
 npm install -g postaci
 ```
 
-## Usage```
+## Usage
 
 This library is intended to be used as a cli. Currently we don't support programmatic usage as a module.
 
@@ -60,7 +65,7 @@ This library is intended to be used as a cli. Currently we don't support program
 postaci -c path/to/your/config.json
 ```
 
-To get started with Postacı, you need to do the following:
+To get started with PostaCI, you need to do the following:
 
 1. Prepare one config file defining your box entries
 2. Prepare a .postacirc file for each box you have
