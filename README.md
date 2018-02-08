@@ -55,7 +55,7 @@ The .postacirc file is a json object and the structure of it is as follows:
 | runnables[].environment | string | Path to the environment variables file relative to the box root. | Optional |
 | runnables[].globals | string | Path to the global variables file relative to the box root. | Optional |
 | runnables[].iterationData | string | Path to the data variables file relative to the box root. | Optional |
-| runnables[].iterationCount | number | Number of iterations. | Optional
+| runnables[].iterationCount | number | Number of iterations. | Optional |
 
 
 ## Usage
@@ -73,7 +73,25 @@ To get started with PostaCI, you need to do the following:
 
 ### config.json
 
-config.json is the file you put all of the necessary information 
+config.json is the file you put all of the necessary information. You should not add this file to repository since it has credential information and environment specific settings.
+
+You can use the [config-sample.json](/config-sample.json) and modify it to suit your needs.
+
+| Field | Type | Description | Required |
+| ----- | ---- | ----------- | -------- |
+| boxes | array | Configuration of each box | Required
+| boxes[].address | string | A name to identify box. It should be **unique** among the boxes in the configuration file. | Required |
+| boxes[].gitConfig | object | Settings of the git repo of the box. | Required |
+| boxes[].gitConfig.remoteUrl | string | Remote url of your git repo. | Required |
+| boxes[].gitConfig.localDir | string | The directory of your box. **It will be used to clone your box folder.** | Required |
+| boxes[].gitConfig.branch | string | The branch that will used to checkout and run the tests. | Required |
+| boxes[].gitConfig.credentials | object | Your git credentials that will be used to clone and pull. | Required |
+| boxes[].gitConfig.credentials.username | string | Your git username. | Required |
+| boxes[].gitConfig.credentials.passphrase | string | Your git password. | Required |
+| boxes[].injectAssets | number | The information to be used to inject assets variable. | Optional |
+| boxes[].injectAssets.key | number | The key of assets variable | Required if injectAssets exists. |
+| boxes[].injectAssets.value | number | The relative filepath of the root of your assets. | Required if injectAssets exists. |
+| boxes[].scheduleConfig | string | Cron-like configuration. See [node-schedule](https://github.com/node-schedule/node-schedule#cron-style-scheduling) | Optional |
 
 ## What does postacı mean?
 
