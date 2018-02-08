@@ -29,6 +29,18 @@ PostaCI provides a simple web server and lets you trigger runs, get results of r
 
 We, in [Bilgetech](http://www.bilgetech.com.tr) use this feature to refresh the test collections after tests are updated and re-run the tests after a new version of the tested project is published.
 
+## Usage
+
+This library is intended to be used as a cli. Currently we don't support programmatic usage as a module.
+
+```
+$ postaci -c config.json
+```
+
+To get started with PostaCI, you need to do the following:
+
+1. Prepare one config file defining your box entries
+2. Prepare your folder structure for each box and put .postacirc file into it.
 
 ## Concepts
 
@@ -37,7 +49,6 @@ A box is a representation of your test collections which are living in the same 
 
 ### Runnable
 A runnable is the sum of one collection file and the necessary files such as environment variables, global variables, data variables etc. Runnables can share files but may have side effects, so be careful about that.
-
 
 ![box-folder-structure](https://user-images.githubusercontent.com/4990386/35972761-27fdd732-0ce4-11e8-944a-cb5342cca28c.png)
 
@@ -56,20 +67,6 @@ The .postacirc file is a json object and the structure of it is as follows:
 | runnables[].globals | string | Path to the global variables file relative to the box root. | Optional |
 | runnables[].iterationData | string | Path to the data variables file relative to the box root. | Optional |
 | runnables[].iterationCount | number | Number of iterations. | Optional |
-
-
-## Usage
-
-This library is intended to be used as a cli. Currently we don't support programmatic usage as a module.
-
-```
-$ postaci -c path/to/your/config.json
-```
-
-To get started with PostaCI, you need to do the following:
-
-1. Prepare one config file defining your box entries
-2. Prepare a .postacirc file for each box you have
 
 ### config.json
 
