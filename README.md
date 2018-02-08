@@ -24,38 +24,10 @@ PostaCI generate badges with the help of [badges](https://github.com/badges/shie
 ### Scheduling
 You can schedule your test runs in a cron-like manner. It uses [node-schedule](https://github.com/node-schedule/node-schedule) to trigger test runs.
 
-### Webhooks and Endpoints
+### Webhooks
 PostaCI provides a simple web server and lets you trigger runs, get results of runs and pull the git repository. So you can use github webhooks, post-release scripts, etc to create a simple continous integration flow.
 
 We, in [Bilgetech](http://www.bilgetech.com.tr) use this feature to refresh the test collections after tests are updated and re-run the tests after a new version of the tested project is published.
-
-#### `GET/POST /refresh/:box-address`
-Clones or pulls the box. Or queues a refresh order if the box is currently refreshing or running.
-
-After the pull operation completed, runs all of the runnables inside of the box.
-
-#### `GET/POST /run/:box-address`
-Runs all of the runnables inside of the box. Or queues a run command if the box is currently refreshing or running.
-
-#### `GET/POST /badge/:box-address/:runnable-name`
-Get the svg badge for the given runnable. All of the options are listed here:
-
-- ![](https://img.shields.io/badge/tests-running...-yellow.svg)
-- ![](https://img.shields.io/badge/all%20passing-50/50-green.svg)
-- ![](https://img.shields.io/badge/some%20failing-49/50-orange.svg)
-- ![](https://img.shields.io/badge/error-has%20errors-red.svg)
-- ![](https://img.shields.io/badge/error-fatal%20error-red.svg)
-- ![](https://img.shields.io/badge/box-not%20found-lightgrey.svg)
-- ![](https://img.shields.io/badge/runnable-not%20found-lightgrey.svg)
-- ![](https://img.shields.io/badge/runnable-not%20ready-lightgrey.svg)
-
-
-#### `GET/POST /summary/:box-address/:runnable-name`
-
-Returns the json summary of the run. This json is directly pipelined from newman's json reporter.
-
-
-
 
 ## Usage
 
@@ -69,6 +41,32 @@ To get started with PostaCI, you need to do the following:
 
 1. Prepare one config file defining your box entries
 2. Prepare your folder structure for each box and put .postacirc file into it.
+
+## Endpoints
+
+##### `GET/POST /refresh/:box-address`
+Clones or pulls the box. Or queues a refresh order if the box is currently refreshing or running.
+
+After the pull operation completed, runs all of the runnables inside of the box.
+
+##### `GET/POST /run/:box-address`
+Runs all of the runnables inside of the box. Or queues a run command if the box is currently refreshing or running.
+
+##### `GET/POST /badge/:box-address/:runnable-name`
+Get the svg badge for the given runnable. All of the options are listed here:
+
+- ![](https://img.shields.io/badge/tests-running...-yellow.svg)
+- ![](https://img.shields.io/badge/all%20passing-50/50-green.svg)
+- ![](https://img.shields.io/badge/some%20failing-49/50-orange.svg)
+- ![](https://img.shields.io/badge/error-has%20errors-red.svg)
+- ![](https://img.shields.io/badge/error-fatal%20error-red.svg)
+- ![](https://img.shields.io/badge/box-not%20found-lightgrey.svg)
+- ![](https://img.shields.io/badge/runnable-not%20found-lightgrey.svg)
+- ![](https://img.shields.io/badge/runnable-not%20ready-lightgrey.svg)
+
+##### `GET/POST /summary/:box-address/:runnable-name`
+
+Returns the json summary of the run. This json is directly pipelined from newman's json reporter.
 
 ## Concepts
 
