@@ -4,6 +4,12 @@
 |-|-|
 | ![postaci](https://user-images.githubusercontent.com/4990386/35919965-89ccc314-0c27-11e8-83bd-d5e143e91793.png) | PostaCI is a simple continous integration tool to run [postman](https://www.getpostman.com) tests through http requests, schedule the test runs and and see the results as badges like these: <br /><br /> ![](https://img.shields.io/badge/all%20passing-34/34-green.svg) ![](https://img.shields.io/badge/some%20failing-40/42-orange.svg) ![](https://img.shields.io/badge/mind%20blowing-error-red.svg)
 
+## Installation
+
+```
+npm install -g postaci
+```
+
 ## Features
 
 ### Git Support
@@ -51,11 +57,6 @@ The .postacirc file is a json object and the structure of it is as follows:
 | runnables[].iterationData | string | Path to the data variables file relative to the box root. | Optional |
 | runnables[].iterationCount | number | Number of iterations. | Optional
 
-## Installation
-
-```
-npm install -g postaci
-```
 
 ## Usage
 
