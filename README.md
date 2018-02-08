@@ -2,7 +2,7 @@
 
 | | | 
 |-|-|
-| ![postaci](https://user-images.githubusercontent.com/4990386/35919965-89ccc314-0c27-11e8-83bd-d5e143e91793.png) | PostaCI is a simple continous integration tool to run [postman](https://www.getpostman.com) tests through http requests, schedule the test runs and and see the results as badges like these: <br /><br /> ![](https://img.shields.io/badge/all%20passing-34/34-green.svg) ![](https://img.shields.io/badge/some%20failing-40/42-orange.svg) ![](https://img.shields.io/badge/mind%20blowing-error-red.svg)
+| ![postaci](https://user-images.githubusercontent.com/4990386/35919965-89ccc314-0c27-11e8-83bd-d5e143e91793.png) | PostaCI is a simple continous integration tool to run [postman](https://www.getpostman.com) tests through http requests, schedule the test runs and and see the results as badges like these: <br /><br /> ![](https://img.shields.io/badge/all%20passing-34/34-green.svg) ![](https://img.shields.io/badge/some%20failing-40/42-orange.svg) ![](https://img.shields.io/badge/error-has%errors-red.svg)
 
 ## Installation
 
@@ -24,10 +24,38 @@ PostaCI generate badges with the help of [badges](https://github.com/badges/shie
 ### Scheduling
 You can schedule your test runs in a cron-like manner. It uses [node-schedule](https://github.com/node-schedule/node-schedule) to trigger test runs.
 
-### Webhooks
+### Webhooks and Endpoints
 PostaCI provides a simple web server and lets you trigger runs, get results of runs and pull the git repository. So you can use github webhooks, post-release scripts, etc to create a simple continous integration flow.
 
 We, in [Bilgetech](http://www.bilgetech.com.tr) use this feature to refresh the test collections after tests are updated and re-run the tests after a new version of the tested project is published.
+
+#### `GET/POST /refresh/:box-address`
+Clones or pulls the box. Or queues a refresh order if the box is currently refreshing or running.
+
+After the pull operation completed, runs all of the runnables inside of the box.
+
+#### `GET/POST /run/:box-address`
+Runs all of the runnables inside of the box. Or queues a run command if the box is currently refreshing or running.
+
+#### `GET/POST /badge/:box-address/:runnable-name`
+Get the svg badge for the given runnable. All of the options are listed here:
+
+- ![](https://img.shields.io/badge/tests-running...-yellow.svg)
+- ![](https://img.shields.io/badge/all%20passing-50/50-green.svg)
+- ![](https://img.shields.io/badge/some%20failing-49/50-orange.svg)
+- ![](https://img.shields.io/badge/error-has%20errors-red.svg)
+- ![](https://img.shields.io/badge/error-fatal%20error-red.svg)
+- ![](https://img.shields.io/badge/box-not%20found-lightgrey.svg)
+- ![](https://img.shields.io/badge/runnable-not%20found-lightgrey.svg)
+- ![](https://img.shields.io/badge/runnable-not%20ready-lightgrey.svg)
+
+
+#### `GET/POST /summary/:box-address/:runnable-name`
+
+Returns the json summary of the run. This json is directly pipelined from newman's json reporter.
+
+
+
 
 ## Usage
 
@@ -92,6 +120,62 @@ You can use the [config-sample.json](/config-sample.json) modifying it to suit y
 | boxes[].injectAssets.value | number | The relative filepath of the root of your assets. | Required if injectAssets exists. |
 | boxes[].scheduleConfig | string | Cron-like configuration. See [node-schedule](https://github.com/node-schedule/node-schedule#cron-style-scheduling) | Optional |
 
+### Assets Injection
+One thing problematic with postman tests is file uploads. You can select the file from the UI but, if you export the collection the output cannot be directly run by newman since the files you try to upload is not defined.
+
+We try to address this problem by manually adding file paths to the exported collection. See the example below:
+
+```
+"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"description": "",
+									"type": "file",
+									"src": "{{ASSETS}}/user.jpg" // <------- MANUALLY ADD SRC ENTRY
+								}
+							]
+						},
+```
+
+See [sample-file-upload-test.json](sample-file-upload-test.json) for the whole item.
+
+If injectAssets is enabled in the configuration, PostaCI will add or replace assets key and value and make newman find the files in your machine.
+
+## Ideal Work Flow
+
+#### One Time Setup:
+1. Set up a webhook to http://your-server.com:3000/refresh/box-name so in every push to master will trigger a pull and run.
+2. Set up your publish script or manually trigger http://your-server.com:3000/run/box-name after each release of the code being tested by your Postman tests.
+
+#### Every Time You Add or Update Tests:
+1. Develop your tests in Postman.
+2. Export collections, environments, globals and data files to the relevant place in your box folder.
+3. Manually edit collection files to add src fields if you want to inject assets and do file upload tests.
+4. Commit your changes and push it to master.
+5. After a while, your badges are ready
+
+## Caveats
+PostaCI is in its alpha state, so expect malfunctions, instability and lot's of short-comings. Some of the stupid restriction of the current version is the following:
+
+- Assets Injection works only if you have globals file.
+- Clone and pull functions work only if repo accepts username/passphrase authentication. This also means you cannot use PostaCI with public repos for now.
+- Since PostaCI depends on libgit2, in the environment you install PostaCI, there should be make and gcc.
+- All of the boxes and runnables are being run in parallel, this is a good thing if you prefer, but it's not configurable right now.
+- PostaCI server runs on port 3000 and it's not configurable yet.
+- Runnables inside of a box cannot be run independently. You always have to run the entire box for now :/
+- When you start PostaCI it automatically clone repos and run tests. This not configurable right now.
+
+
 ## What does postacı mean?
 
 The word postacı `/postadʒɯ/` is the Turkish word for a postman. If you have hard time reading phonetic alphabet, you can call it post-uh-gee or post-uh-c-i.
+
+## Contributing
+
+All kind of contribution is welcomed :)
+
+## License
+
+License information can be found in [LICENSE](/LICENSE)
