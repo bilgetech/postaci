@@ -13,14 +13,14 @@
       "globals": "auth/scenarios-dev/globals.json"
     },
     {
-      "name": "billingInfo",
-      "collection": "auth/scenarios-dev/billingInfo.json",
+      "name": "billing",
+      "collection": "auth/scenarios-dev/billing.json",
       "environment": "auth/scenarios-dev/env.json",
       "globals": "auth/scenarios-dev/globals.json"
     },
     {
-      "name": "gsPlatformInfo",
-      "collection": "auth/scenarios-dev/gsPlatformInfo.json",
+      "name": "platforms",
+      "collection": "auth/scenarios-dev/platforms.json",
       "environment": "auth/scenarios-dev/env.json",
       "globals": "auth/scenarios-dev/globals.json"
     },
