@@ -1,0 +1,85 @@
+{
+			"name": "Add User Picture",
+			"description": "",
+			"item": [
+				{
+					"name": "Change Picture by NonAdmin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5a2b228c-1d38-415a-94d5-1d973ae89cc3",
+								"type": "text/javascript",
+								"exec": [
+									"var iteration = pm.variables.get(\"ITERATION\");",
+									"",
+									"if(iteration === \"NO_USER\") {",
+									"    pm.test(\"Status code is 401\", function () {",
+									"        pm.response.to.have.status(401);",
+									"    });",
+									"} else if(iteration === \"NON_ADMIN\") {",
+									"    pm.test(\"Status code is 200\", function () {",
+									"        pm.response.to.have.status(200);",
+									"    });",
+									"}",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "bearer {{NON_ADMIN_NEW_ACCESS_TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"description": "",
+									"type": "file",
+									"src": "{{ASSETS}}/user.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/changepicture",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"changepicture"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c4d60a46-4441-444d-87c3-f19b641a8cb1",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "0dd064c3-216c-456f-a0d0-d1f720512d76",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
