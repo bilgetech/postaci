@@ -26,13 +26,14 @@ We, in [Bilgetech](http://www.bilgetech.com.tr) use this feature to refresh the 
 
 ## Concepts
 
-![box-folder-structure](https://user-images.githubusercontent.com/4990386/35969001-81e4a126-0cd6-11e8-8a06-2f4a024ca48a.png)
-
 ### Box
 A box is a representation of your test collections which are living in the same repository. Each box can have multiple runnables and must have a .postacirc file in which you define all of your runnables.
 
 ### Runnable
 A runnable is the sum of one collection file and the necessary files such as environment variables, global variables, data variables etc. Runnables can share files but may have side effects, so be careful about that.
+
+
+![box-folder-structure](https://user-images.githubusercontent.com/4990386/35972761-27fdd732-0ce4-11e8-944a-cb5342cca28c.png)
 
 ### .postacirc
 
