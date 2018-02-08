@@ -1,0 +1,36 @@
+{
+  "runnables": [
+    {
+      "name": "user",
+      "collection": "auth/scenarios-dev/user.json",
+      "environment": "auth/scenarios-dev/env.json",
+      "globals": "auth/scenarios-dev/globals.json"
+    },
+    {
+      "name": "customer",
+      "collection": "auth/scenarios-dev/customer.json",
+      "environment": "auth/scenarios-dev/env.json",
+      "globals": "auth/scenarios-dev/globals.json"
+    },
+    {
+      "name": "billingInfo",
+      "collection": "auth/scenarios-dev/billingInfo.json",
+      "environment": "auth/scenarios-dev/env.json",
+      "globals": "auth/scenarios-dev/globals.json"
+    },
+    {
+      "name": "gsPlatformInfo",
+      "collection": "auth/scenarios-dev/gsPlatformInfo.json",
+      "environment": "auth/scenarios-dev/env.json",
+      "globals": "auth/scenarios-dev/globals.json"
+    },
+    {
+      "name": "access-control",
+      "collection": "auth/access-control-dev/access.json",
+      "environment": "auth/access-control-dev/env.json",
+      "globals": "auth/access-control-dev/globals.json",
+      "iterationData": "auth/access-control-dev/datavars.json",
+      "iterationCount": 2
+    }
+  ]
+}
