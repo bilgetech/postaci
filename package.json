@@ -1,6 +1,6 @@
 {
   "name": "postaci",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Continuous test runner for Postman",
   "main": "app.js",
   "scripts": {
