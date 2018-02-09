@@ -121,20 +121,20 @@ You can use the [config-sample.json](/config-sample.json) modifying it to suit y
 ### Assets Injection
 One thing problematic with postman tests is file uploads. You can select the file from the UI but, if you export the collection the output cannot be directly run by newman since the files you try to upload is not defined.
 
-We try to address this problem by manually adding file paths to the exported collection. See the example below:
+We try to address this problem by manually adding file paths to the exported collection file. See the example below:
 
 ```
 "body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "file",
-									"description": "",
-									"type": "file",
-									"src": "{{ASSETS}}/user.jpg" // <------- MANUALLY ADD SRC ENTRY
-								}
-							]
-						},
+	"mode": "formdata",
+	"formdata": [
+		{
+			"key": "file",
+			"description": "",
+			"type": "file",
+			"src": "{{ASSETS}}/user.jpg" // <------- MANUALLY ADD SRC ENTRY
+		}
+	]
+},
 ```
 
 See [sample-file-upload-test.json](sample-file-upload-test.json) for the whole item.
