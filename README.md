@@ -44,15 +44,15 @@ To get started with PostaCI, you need to do the following:
 
 ## Endpoints
 
-##### `GET/POST /refresh/:box-address`
+- ##### `GET/POST /refresh/:box-address`
 Clones or pulls the box. Or queues a refresh order if the box is currently refreshing or running.
 
 After the pull operation completed, runs all of the runnables inside of the box.
 
-##### `GET/POST /run/:box-address`
+- ##### `GET/POST /run/:box-address`
 Runs all of the runnables inside of the box. Or queues a run command if the box is currently refreshing or running.
 
-##### `GET /badge/:box-address/:runnable-name`
+- ##### `GET /badge/:box-address/:runnable-name`
 Returns the svg badge for the given runnable. All of the options are listed here:
 
 - ![](https://img.shields.io/badge/tests-running...-yellow.svg)
@@ -64,7 +64,7 @@ Returns the svg badge for the given runnable. All of the options are listed here
 - ![](https://img.shields.io/badge/runnable-not%20found-lightgrey.svg)
 - ![](https://img.shields.io/badge/runnable-not%20ready-lightgrey.svg)
 
-##### `GET /summary/:box-address/:runnable-name`
+- ##### `GET /summary/:box-address/:runnable-name`
 
 Returns the json summary of the run. This json is directly pipelined from newman's json reporter.
 
