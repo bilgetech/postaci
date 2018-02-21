@@ -1,4 +1,4 @@
-# PostaCI
+# PostaCI [![npm version](https://img.shields.io/npm/v/postaci.svg)](https://www.npmjs.com/package/postaci)
 
 | | | 
 |-|-|
