@@ -7,7 +7,7 @@ const server = require('./server');
 const Boxes = require('./components/boxes');
 
 program
-  .version('0.1.0')
+  .version('0.1.2')
   .option('-c, --config <file>', 'Configuration file.')
   .parse(process.argv);
 

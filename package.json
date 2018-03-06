@@ -1,6 +1,6 @@
 {
   "name": "postaci",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Continuous test runner for Postman",
   "main": "app.js",
   "scripts": {
@@ -23,7 +23,7 @@
     "testing",
     "javascript"
   ],
-  "author": "Ahmet Safa Orhan",
+  "author": "safaorhan",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/bilgetech/postaci/issues"
