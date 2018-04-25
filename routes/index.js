@@ -20,14 +20,14 @@ router.get('/badge/:box/:runnable', (req, res) => {
   box = Boxes.findBoxByAddress(box);
   if (box) {
     runnable = box.getRunnableByName(runnable);
-    if (box.isRunning) {
-      res.sendFile(badgeFile('tests-running.svg'), sendOptions);
-    } else if (runnable) {
+    if (runnable) {
       if (runnable.badge) {
         res
           .header('Cache-Control', 'no-cache')
           .contentType('svg')
           .end(runnable.badge, 'binary');
+      } else if (box.isRunning) {
+        res.sendFile(badgeFile('tests-running.svg'), sendOptions);
       } else {
         res.sendFile(badgeFile('runnable-not-ready.svg'), sendOptions);
       }

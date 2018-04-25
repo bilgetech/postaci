@@ -79,13 +79,40 @@ function updateGlobalEntry(globalsPath, key, value) {
 
 function runSingle(runnable, done) {
   newman
-    .run({
-      collection: runnable.collection,
-      iterationData: runnable.iterationData,
-      environment: runnable.environment,
-      globals: runnable.globals,
-      iterationCount: runnable.iterationCount,
-    })
+    .run(
+      {
+        collection: runnable.collection,
+        iterationData: runnable.iterationData,
+        environment: runnable.environment,
+        globals: runnable.globals,
+        iterationCount: runnable.iterationCount,
+        timeoutRequest: 10000,
+        timeoutScript: 15000,
+        insecure: true,
+        reporters: ['cli'],
+        reporter: {
+          cli: {
+            silent: false,
+            noSummary: false,
+            noFailures: true,
+            noAssertions: true,
+            noSuccessAssertions: true,
+            noConsole: false,
+          },
+        },
+        color: true,
+        noColor: false,
+      },
+      (err) => {
+        if (err) {
+          console.error(runnable.name, '\t\t\t', 'Cannot start this runnable. See error.');
+          console.error(JSON.stringify(err));
+          runnable.summary = { message: 'Cannot start this runnable. See error.', error: err };
+          runnable.err = err;
+          done(err);
+        }
+      },
+    )
     .on('start', () => {
       // on start of run, log to console
       console.log(runnable.name, '\t\t\t', 'Collection run started!');
@@ -97,9 +124,13 @@ function runSingle(runnable, done) {
         console.log(runnable.name, '\t\t\t', args.item.name);
       }
     })
+    .on('exception', (cursor, args) => {
+      console.error(runnable.name);
+    })
     .on('done', (err, summary) => {
       runnable.summary = summary;
       runnable.err = err;
+      console.log(`--------------- DONE RUNNING: ${runnable.name} ---------------`);
       done();
     });
 }
@@ -112,8 +143,9 @@ function run() {
 
     let completed = 0;
     this.postacirc.runnables.forEach((runnable) => {
-      runSingle(runnable, () => {
+      runSingle(runnable, (err) => {
         completed += 1;
+        this.generateBadge(runnable);
         if (completed === this.postacirc.runnables.length) {
           console.log(this.address, '\t\t\t', 'Box run completed');
           this.isRunning = false;
@@ -125,8 +157,6 @@ function run() {
             console.log(this.address, '\t\t\t', 'There is a run queued');
             this.runQueued = false;
             this.run();
-          } else {
-            this.generateAllBadges();
           }
         }
       });
@@ -156,7 +186,15 @@ function afterRefresh() {
 
       runnable.globals = runnable.globals ? path.join(localDir, runnable.globals) : null;
 
-      updateGlobalEntry(runnable.globals, key, value);
+      try {
+        updateGlobalEntry(runnable.globals, key, value);
+      } catch (ex) {
+        runnable.err = {
+          message: 'Cannot update global entry',
+          error: ex,
+          help: 'Can you check your global variable file path or contents?',
+        };
+      }
     });
   }
 
@@ -212,6 +250,7 @@ function Box(opts) {
 Box.prototype.refreshAndRun = refreshAndRun;
 Box.prototype.run = run;
 Box.prototype.generateAllBadges = generateAllBadges;
+Box.prototype.generateBadge = generateBadge;
 Box.prototype.getRunnableByName = getRunnableByName;
 
 module.exports = Box;
