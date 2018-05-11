@@ -10,6 +10,8 @@
 $ npm install -g postaci
 ```
 
+> You may need to install `build-essentials` and `libssl-dev` to install PostaCI.
+
 ## Features
 
 ### Git Support
