@@ -10,7 +10,8 @@
 $ npm install -g postaci
 ```
 
-> You may need to install `build-essential` and `libssl-dev` to install PostaCI.
+> Note 1: You may need to install `build-essential` and `libssl-dev` to install PostaCI.
+> Note 2: Currently PostaCI is suitable with node 8 (LTS). You may have some difficulties installing it with versions greater than 8.
 
 ## Features
 
