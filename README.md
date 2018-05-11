@@ -10,7 +10,7 @@
 $ npm install -g postaci
 ```
 
-> You may need to install `build-essentials` and `libssl-dev` to install PostaCI.
+> You may need to install `build-essential` and `libssl-dev` to install PostaCI.
 
 ## Features
 
